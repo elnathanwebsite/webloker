@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Lamaran Masuk</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #E9ECEF, #F8F9FA);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6f42c1, #4e73df);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(111, 66, 193, 0.2);
+            text-align: center;
+        }
+
+        .datetime-display {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .user-info {
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .search-bar {
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 15px 45px;
+            border: none;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(111, 66, 193, 0.1);
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            box-shadow: 0 2px 15px rgba(111, 66, 193, 0.2);
+        }
+
+        .search-bar::before {
+            content: '\f002';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6f42c1;
+            font-size: 18px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            background: #fff;
+            color: #6f42c1;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(111, 66, 193, 0.1);
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(111, 66, 193, 0.2);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #6f42c1, #4e73df);
+            color: #fff;
+        }
+
+        .applications-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .application-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(111, 66, 193, 0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .application-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #6f42c1, #4e73df);
+        }
+
+        .application-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(111, 66, 193, 0.2);
+        }
+
+        .card-header {
+            border-bottom: 2px solid rgba(111, 66, 193, 0.1);
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .card-header h3 {
+            color: #6f42c1;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            color: #495057;
+        }
+
+        .info-item i {
+            color: #6f42c1;
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .loading-card {
+            animation: shimmer 2s infinite linear;
+            background: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+            background-size: 1000px 100%;
+            height: 200px;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0 }
+            100% { background-position: 1000px 0 }
+        }
+
+        @media (max-width: 768px) {
+            .applications-container {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                padding: 15px;
+            }
+
+            .search-bar input {
+                padding: 12px 40px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 style="color: #fff; margin-bottom: 15px;">Data Lamaran Masuk</h1>
+            <div class="datetime-display" id="current-time">
+                Current Date and Time (UTC): YYYY-MM-DD HH:MM:SS
+            </div>
+            <div class="user-info">
+                <i class="fas fa-user"></i>
+                <span id="username">HRD</span>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Cari berdasarkan nama atau pendidikan...">
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Semua</button>
+            <button class="filter-btn" data-filter="new">Baru</button>
+            <button class="filter-btn" data-filter="education-s1">S1/D3</button>
+            <button class="filter-btn" data-filter="education-sma">SMA</button>
+        </div>
+
+        <div class="applications-container" id="applicationsContainer">
+            <!-- Data akan dimuat di sini -->
+        </div>
+    </div>
+
+    <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
+        // Konfigurasi Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgdRhE9IrAwKIsvSZ_C7Y4KevhD9vOZXg",
+            authDomain: "ecomerche-561d2.firebaseapp.com",
+            databaseURL: "https://ecomerche-561d2-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "ecomerche-561d2",
+            storageBucket: "ecomerche-561d2.firebasestorage.app",
+            messagingSenderId: "456001161495",
+            appId: "1:456001161495:web:508edf4396e2558416cf52",
+            measurementId: "G-NHV2K32BJL"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Update waktu
+        function updateTime() {
+            const now = new Date();
+            const year = now.getUTCFullYear();
+            const month = String(now.getUTCMonth() + 1).padStart(2, '0');
+            const day = String(now.getUTCDate()).padStart(2, '0');
+            const hours = String(now.getUTCHours()).padStart(2, '0');
+            const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+            const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+            
+            const formattedTime = `Current Date and Time (UTC): ${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+            document.getElementById('current-time').textContent = formattedTime;
+        }
+
+        // Update username
+        document.getElementById('username').textContent = 'HRD: SOFIA ENJELITA M.KOM';
+
+        // Update waktu setiap detik
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        function showLoading() {
+            const container = document.getElementById('applicationsContainer');
+            container.innerHTML = `
+                <div class="application-card loading-card"></div>
+                <div class="application-card loading-card"></div>
+                <div class="application-card loading-card"></div>
+            `;
+        }
+
+        function createApplicationCard(app, id) {
+    const card = document.createElement('div');
+    card.className = 'application-card';
+    const timestamp = new Date(app.timestamp).toLocaleString('id-ID');
+    
+    card.innerHTML = `
+        <div class="card-header">
+            <h3>${app.fullName}</h3>
+            <span class="status-badge">Baru</span>
+        </div>
+        <div class="info-item">
+            <i class="fas fa-user"></i>
+            <span>${app.age} tahun, ${app.gender}</span>
+        </div>
+        <div class="info-item">
+            <i class="fas fa-phone"></i>
+            <span>${app.phoneNumber || 'Tidak ada nomor telepon'}</span>
+        </div>
+        <div class="info-item">
+            <i class="fas fa-graduation-cap"></i>
+            <span>${app.education}</span>
+        </div>
+        <div class="info-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>${app.address}</span>
+        </div>
+        <div class="info-item">
+            <i class="fas fa-briefcase"></i>
+            <span>${app.experience || 'Tidak ada pengalaman'}</span>
+        </div>
+        <div class="info-item">
+            <i class="fas fa-clock"></i>
+            <span>${timestamp}</span>
+        </div>
+    `;
+    return card;
+}
+        function loadApplications() {
+            showLoading();
+            const applicationsRef = ref(database, 'job-applications');
+            
+            onValue(applicationsRef, (snapshot) => {
+                const container = document.getElementById('applicationsContainer');
+                container.innerHTML = '';
+
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        const data = childSnapshot.val();
+                        const card = createApplicationCard(data, childSnapshot.key);
+                        container.appendChild(card);
+                    });
+                } else {
+                    container.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; color: #6f42c1; padding: 20px;">
+                            Belum ada data lamaran
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchText = e.target.value.toLowerCase();
+            const cards = document.getElementsByClassName('application-card');
+            
+            Array.from(cards).forEach(card => {
+                const name = card.querySelector('h3').textContent.toLowerCase();
+                const education = card.querySelector('.fa-graduation-cap').nextElementSibling.textContent.toLowerCase();
+                
+                if (name.includes(searchText) || education.includes(searchText)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const filter = this.dataset.filter;
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const cards = document.getElementsByClassName('application-card');
+                Array.from(cards).forEach(card => {
+                    const education = card.querySelector('.fa-graduation-cap').nextElementSibling.textContent;
+                    
+                    if (filter === 'all') {
+                        card.style.display = '';
+                    } else if (filter === 'new') {
+                        card.style.display = card.querySelector('.status-badge') ? '' : 'none';
+                    } else if (filter === 'education-s1' && education.includes('S1/D3')) {
+                        card.style.display = '';
+                    } else if (filter === 'education-sma' && education.includes('SMA')) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Load data saat halaman dimuat
+        loadApplications();
+    </script>
+</body>
+</html>
