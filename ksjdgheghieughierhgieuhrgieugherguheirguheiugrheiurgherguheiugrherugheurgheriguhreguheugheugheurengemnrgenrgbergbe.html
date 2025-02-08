@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -216,9 +217,7 @@
     <div class="container">
         <div class="header">
             <h1 style="color: #fff; margin-bottom: 15px;">Data Lamaran Masuk</h1>
-            <div class="datetime-display" id="current-time">
-                Current Date and Time (UTC): YYYY-MM-DD HH:MM:SS
-            </div>
+            <div class="datetime-display" id="current-time">Current Date and Time (UTC): YYYY-MM-DD HH:MM:SS</div>
             <div class="user-info">
                 <i class="fas fa-user"></i>
                 <span id="username">HRD</span>
@@ -240,6 +239,9 @@
             <!-- Data akan dimuat di sini -->
         </div>
     </div>
+
+    <!-- Elemen Audio untuk Notifikasi -->
+    <audio id="notifSound" src="Coldplay - Hymn For The Weekend (Official Video).mp3"></audio>
 
     <script type="module">
         // Import Firebase SDK
@@ -398,6 +400,53 @@
 
         // Load data saat halaman dimuat
         loadApplications();
+        // Tambahkan di awal: Buat elemen audio untuk notifikasi
+const audioNotif = new Audio("notif.mp3");
+
+function tampilkanPesanRealTime() {
+    const daftarPesan = document.getElementById("daftarPesan");
+    daftarPesan.innerHTML = "";
+
+    let pesanTerakhir = ""; // Untuk menyimpan pesan terakhir agar tidak memutar suara saat load pertama kali
+
+    onSnapshot(collection(db, "pesan"), (snapshot) => {
+        daftarPesan.innerHTML = ""; // Kosongkan daftar sebelum menampilkan data baru
+        snapshot.forEach((doc) => {
+            const data = doc.data();
+            const li = document.createElement("li");
+            li.textContent = `${data.nama}: ${data.pesan}`;
+            daftarPesan.appendChild(li);
+        });
+
+        // Ambil pesan terbaru
+        const pesanBaru = snapshot.docs[snapshot.docs.length - 1]?.data().pesan;
+
+        // Mainkan suara hanya jika ada pesan baru yang berbeda dari sebelumnya
+        if (pesanBaru && pesanBaru !== pesanTerakhir) {
+            audioNotif.play();
+            pesanTerakhir = pesanBaru; // Update pesan terakhir
+        }
+    });
+}
+// Event untuk menangani push notification di background
+messaging.onBackgroundMessage((payload) => {
+    console.log("Pesan diterima di background:", payload);
+    self.registration.showNotification(payload.notification.title, {
+        body: payload.notification.body,
+        icon: "https://cdn-icons-png.flaticon.com/512/992/992700.png"
+    });
+});
+// Daftarkan Service Worker untuk menerima notifikasi di background
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("firebase-messaging-sw.js")
+        .then((registration) => {
+            console.log("Service Worker berhasil didaftarkan:", registration);
+        })
+        .catch((error) => {
+            console.log("Service Worker gagal didaftarkan:", error);
+        });
+}
+
     </script>
 </body>
 </html>
