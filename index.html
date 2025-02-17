@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Pendaftaran</title>
+    <title>Pendaftaran</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         * {
@@ -134,7 +134,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Dashboard Riwayat Pendaftaran</h1>
+            <h1>Dashboard Pendaftaran PT Elnathan</h1>
             <div id="current-time"></div>
         </div>
 
@@ -153,7 +153,7 @@
             </div>
         </div>
 
-       <h2>Posisi yang Dibutuhkan</h2>
+              <h2>Posisi yang Dibutuhkan</h2>
 <div class="job-listings">
     <div class="job-card">
         <div class="job-info">
@@ -187,8 +187,7 @@
     </div>
 </div>
 
-
-        <h2>Riwayat Pendaftaran</h2>
+        <h2>Pendaftar</h2>
         <table class="applications-table">
             <thead>
                 <tr>
@@ -278,11 +277,11 @@
                         const date = new Date(application.timestamp);
                         row.innerHTML = `
                             <td>${date.toLocaleDateString('id-ID')}</td>
-                            <td>${application.fullName}</td>
+                            <td>${application.fullName.charAt(0)}****</td>
                             <td>${application.age}</td>
-                            <td>${application.gender}</td>
+                            <td>${application.gender.charAt(0)}****</td>
                             <td>${application.education}</td>
-                            <td>${application.phoneNumber}</td>
+                            <td>${application.phoneNumber.substring(0, 3)}****${application.phoneNumber.substring(application.phoneNumber.length - 2)}</td>
                             <td>Dalam Review</td>
                         `;
                         tableBody.appendChild(row);
