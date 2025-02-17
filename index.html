@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Lamaran Kerja</title>
+    <title>Dashboard Riwayat Pendaftaran</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         * {
@@ -23,13 +21,12 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 20px auto;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 20px rgba(74, 20, 140, 0.3);
-            border: 2px solid #4a148c;
             color: #333;
         }
 
@@ -40,181 +37,180 @@
             padding-bottom: 20px;
         }
 
-        h1 {
-            color: #4a148c;
-            margin-bottom: 10px;
-        }
-
-        .current-info {
-            font-size: 14px;
-            color: #7b1fa2;
-        }
-
-        .form-group {
+        .company-info {
+            background: linear-gradient(45deg, #4a148c, #7b1fa2);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
             margin-bottom: 20px;
         }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #4a148c;
-            font-weight: bold;
+        .profile-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #4a148c;
         }
 
-        input[type="text"],
-        input[type="number"],
-        input[type="tel"],
-        textarea,
-        select {
+        .applications-table {
             width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .applications-table th,
+        .applications-table td {
             padding: 12px;
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #4a148c;
-            border-radius: 8px;
-            color: #333;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .applications-table th {
+            background: #4a148c;
+            color: white;
+        }
+
+        .applications-table tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+
+        .applications-table tr:hover {
+            background-color: #e0e0e0;
+        }
+
+        h1, h2, h3 {
+            color: #4a148c;
+        }
+
+        .job-listings {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .job-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #4a148c;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .job-info {
+            margin-bottom: 15px;
+        }
+
+        .btn-lamar {
+            background: #4a148c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
             font-size: 16px;
             transition: all 0.3s ease;
-        }
-
-        input[type="text"]:focus,
-        input[type="number"]:focus,
-        input[type="tel"]:focus,
-        textarea:focus,
-        select:focus {
-            border-color: #7b1fa2;
-            box-shadow: 0 0 10px rgba(74, 20, 140, 0.5);
-            outline: none;
-        }
-
-        .radio-group {
-            display: flex;
-            gap: 20px;
+            width: 100%;
             margin-top: 10px;
         }
 
-        .radio-option {
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        .btn-lamar:hover {
+            background: #7b1fa2;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
-        button {
-            background: linear-gradient(45deg, #4a148c, #7b1fa2);
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 18px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-        }
-
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(74, 20, 140, 0.4);
-        }
-
-        .success-message {
-            display: none;
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
+        .no-data {
             text-align: center;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            padding: 20px;
+            color: #666;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Form Lamaran Kerja</h1>
-            <div class="current-info">
-                <div id="current-time"></div>
-                <div id="username">HRD : SOFIA ENJELITA PAKPAHAN M.KOM</div>
+            <h1>Dashboard Riwayat Pendaftaran</h1>
+            <div id="current-time"></div>
+        </div>
+
+        <div class="company-info">
+            <h2>Informasi Perusahaan</h2>
+            <p><strong>Nama Perusahaan:</strong> PT. Digital Inovasi Teknologi</p>
+            <p><strong>Alamat:</strong> Jl. Teknologi Raya No. 123, Jakarta Selatan</p>
+            <p><strong>Email:</strong> careers@digitalinovasi.com</p>
+            <p><strong>Telepon:</strong> (021) 555-0123</p>
+        </div>
+
+        <div class="profile-section">
+            <h2>Profil Pengguna</h2>
+            <div id="userProfile">
+                <!-- Profil pengguna akan ditampilkan di sini -->
             </div>
         </div>
 
-        <form id="jobApplicationForm">
-            <div class="form-group">
-                <label for="fullName">Nama Lengkap</label>
-                <input type="text" id="fullName" required>
-            </div>
-
-            <div class="form-group">
-                <label for="phoneNumber">Nomor Telepon</label>
-                <input type="tel" id="phoneNumber" required pattern="[0-9]{10,13}" placeholder="Contoh: 08123456789">
-            </div>
-
-            <div class="form-group">
-                <label for="age">Usia</label>
-                <input type="number" id="age" required min="17" max="65">
-            </div>
-
-            <div class="form-group">
-                <label>Gender</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="male" name="gender" value="Laki-laki" required>
-                        <label for="male">Laki-laki</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="female" name="gender" value="Perempuan">
-                        <label for="female">Perempuan</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="trans" name="gender" value="Trans">
-                        <label for="trans">Trans</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="address">Alamat Lengkap</label>
-                <textarea id="address" rows="3" required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="education">Pendidikan Terakhir</label>
-                <select id="education" required>
-                    <option value="">Pilih Pendidikan</option>
-                    <option value="SD">SD</option>
-                    <option value="SMP">SMP</option>
-                    <option value="SMA">SMA</option>
-                    <option value="S1/D3">S1/D3</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="experience">Pengalaman Kerja (Opsional)</label>
-                <textarea id="experience" rows="4"></textarea>
-            </div>
-
-            <button type="submit">Kirim Lamaran</button>
-        </form>
-        
-        <div id="successMessage" class="success-message">
-            Data berhasil dikirim!
+       <h2>Posisi yang Dibutuhkan</h2>
+<div class="job-listings">
+    <div class="job-card">
+        <div class="job-info">
+            <h3>Software Developer</h3>
+            <p>Pengalaman minimal 2 tahun</p>
+            <p>Gaji: Rp 10.000.000 - Rp 15.000.000</p>
         </div>
+        <a href="lamar.html" class="btn-lamar" target="_blank" style="text-decoration: none;">
+            <i class="fas fa-paper-plane"></i> Lamar Sekarang
+        </a>
+    </div>
+    <div class="job-card">
+        <div class="job-info">
+            <h3>UI/UX Designer</h3>
+            <p>Pengalaman minimal 1 tahun</p>
+            <p>Gaji: Rp 8.000.000 - Rp 12.000.000</p>
+        </div>
+        <a href="lamar.html" class="btn-lamar" target="_blank" style="text-decoration: none;">
+            <i class="fas fa-paper-plane"></i> Lamar Sekarang
+        </a>
+    </div>
+    <div class="job-card">
+        <div class="job-info">
+            <h3>Digital Marketing</h3>
+            <p>Fresh graduate diperbolehkan</p>
+            <p>Gaji: Rp 5.000.000 - Rp 8.000.000</p>
+        </div>
+        <a href="lamar.html" class="btn-lamar" target="_blank" style="text-decoration: none;">
+            <i class="fas fa-paper-plane"></i> Lamar Sekarang
+        </a>
+    </div>
+</div>
+
+
+        <h2>Riwayat Pendaftaran</h2>
+        <table class="applications-table">
+            <thead>
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Nama</th>
+                    <th>Usia</th>
+                    <th>Gender</th>
+                    <th>Pendidikan</th>
+                    <th>No. Telepon</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="applicationsTableBody">
+                <!-- Data akan dimasukkan di sini -->
+            </tbody>
+        </table>
     </div>
 
-    <!-- Import Firebase -->
     <script type="module">
-        // Import fungsi yang diperlukan dari Firebase
+        // Import Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         // Konfigurasi Firebase
         const firebaseConfig = {
@@ -230,67 +226,80 @@
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
         const database = getDatabase(app);
 
         // Update waktu
         function updateTime() {
             const now = new Date();
-            const formattedTime = now.toISOString().slice(0, 19).replace('T', ' ') + ' UTC';
+            const formattedTime = now.toLocaleString('id-ID', { 
+                dateStyle: 'full', 
+                timeStyle: 'medium' 
+            });
             document.getElementById('current-time').textContent = formattedTime;
         }
         setInterval(updateTime, 1000);
         updateTime();
 
-        // Handle form submission
-        document.getElementById('jobApplicationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Fungsi untuk melamar pekerjaan
+        window.applyJob = function(position) {
+            // Redirect ke halaman formulir lamaran dengan posisi yang dipilih
+            window.location.href = `form-lamaran.html?position=${encodeURIComponent(position)}`;
+        };
 
-            const formData = {
-                fullName: document.getElementById('fullName').value,
-                phoneNumber: document.getElementById('phoneNumber').value,
-                age: document.getElementById('age').value,
-                gender: document.querySelector('input[name="gender"]:checked').value,
-                address: document.getElementById('address').value,
-                education: document.getElementById('education').value,
-                experience: document.getElementById('experience').value || 'Tidak ada pengalaman',
-                timestamp: new Date().toISOString()
-            };
+        // Tampilkan profil pengguna dari localStorage
+        function displayUserProfile() {
+            const userProfile = document.getElementById('userProfile');
+            const savedProfile = localStorage.getItem('userProfile');
+            
+            if (savedProfile) {
+                const profile = JSON.parse(savedProfile);
+                userProfile.innerHTML = `
+                    <p><strong>Nama:</strong> ${profile.name || 'Tidak tersedia'}</p>
+                    <p><strong>Usia:</strong> ${profile.age || 'Tidak tersedia'}</p>
+                    <p><strong>Gender:</strong> ${profile.gender || 'Tidak tersedia'}</p>
+                `;
+            } else {
+                userProfile.innerHTML = '<p>Profil belum tersedia</p>';
+            }
+        }
 
-            // Simpan data ke Firebase
+        // Tampilkan data pendaftaran dari Firebase
+        function displayApplications() {
             const applicationsRef = ref(database, 'job-applications');
-            push(applicationsRef, formData)
-                .then(() => {
-                    document.getElementById('successMessage').style.display = 'block';
-                    document.getElementById('jobApplicationForm').reset();
-                    setTimeout(() => {
-                        document.getElementById('successMessage').style.display = 'none';
-                    }, 3000);
-                })
-                .catch((error) => {
-                    console.error("Error: ", error);
-                    alert('Terjadi kesalahan. Silakan coba lagi.');
-                });
-        });
-        // Event untuk menangani push notification di background
-messaging.onBackgroundMessage((payload) => {
-    console.log("Pesan diterima di background:", payload);
-    self.registration.showNotification(payload.notification.title, {
-        body: payload.notification.body,
-        icon: "https://cdn-icons-png.flaticon.com/512/992/992700.png"
-    });
-});
-// Daftarkan Service Worker untuk menerima notifikasi di background
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("firebase-messaging-sw.js")
-        .then((registration) => {
-            console.log("Service Worker berhasil didaftarkan:", registration);
-        })
-        .catch((error) => {
-            console.log("Service Worker gagal didaftarkan:", error);
-        });
-}
+            onValue(applicationsRef, (snapshot) => {
+                const tableBody = document.getElementById('applicationsTableBody');
+                tableBody.innerHTML = '';
 
+                if (snapshot.exists()) {
+                    const applications = snapshot.val();
+                    Object.keys(applications).reverse().forEach(key => {
+                        const application = applications[key];
+                        const row = document.createElement('tr');
+                        const date = new Date(application.timestamp);
+                        row.innerHTML = `
+                            <td>${date.toLocaleDateString('id-ID')}</td>
+                            <td>${application.fullName}</td>
+                            <td>${application.age}</td>
+                            <td>${application.gender}</td>
+                            <td>${application.education}</td>
+                            <td>${application.phoneNumber}</td>
+                            <td>Dalam Review</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="7" class="no-data">Belum ada data pendaftaran</td>
+                        </tr>
+                    `;
+                }
+            });
+        }
+
+        // Inisialisasi dashboard
+        displayUserProfile();
+        displayApplications();
     </script>
 </body>
 </html>
