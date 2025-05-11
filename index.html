@@ -555,6 +555,23 @@
                     .catch(err => console.error('[SW] Registration failed:', err));
             });
         }
+        // Paksa viewport agar selalu 1024px seperti tampilan desktop
+(function() {
+    // Cek apakah tag viewport sudah ada
+    let viewport = document.querySelector('meta[name="viewport"]');
+
+    if (viewport) {
+        // Jika sudah ada, ubah isinya
+        viewport.setAttribute('content', 'width=1024');
+    } else {
+        // Jika belum ada, buat baru
+        viewport = document.createElement('meta');
+        viewport.name = "viewport";
+        viewport.content = "width=1024";
+        document.head.appendChild(viewport);
+    }
+})();
+
     </script>
 </body>
 </html>
