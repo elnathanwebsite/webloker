@@ -2,197 +2,428 @@
 <html lang="id">
 <head>
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="shortcut icon" href="/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-<link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendaftaran</title>
+    <title>Pendaftaran PT Elnathan</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #1e88e5;
+            --secondary-color: #64b5f6;
+            --accent-color: #0d47a1;
+            --light-blue: #bbdefb;
+            --white: #ffffff;
+            --light-gray: #f5f7fa;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --shadow: 0 4px 6px rgba(30, 136, 229, 0.1);
+            --transition: all 0.3s ease;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #4a148c, #7b1fa2);
+            background: linear-gradient(135deg, var(--light-blue), var(--white));
             min-height: 100vh;
             padding: 20px;
-            color: #fff;
+            color: var(--text-dark);
         }
 
         .container {
             max-width: 1200px;
             margin: 20px auto;
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--white);
             padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(74, 20, 140, 0.3);
-            color: #333;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
         }
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #4a148c;
+            margin-bottom: 40px;
+            position: relative;
             padding-bottom: 20px;
         }
 
+        .header:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        #current-time {
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
         .company-info {
-            background: linear-gradient(45deg, #4a148c, #7b1fa2);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            transform: translateY(0);
+            transition: var(--transition);
+        }
+
+        .company-info:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(30, 136, 229, 0.2);
         }
 
         .profile-section {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border: 2px solid #4a148c;
+            background: var(--light-gray);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px solid var(--light-blue);
+        }
+
+        .job-listings {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .job-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid var(--light-blue);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(30, 136, 229, 0.15);
+        }
+
+        .job-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 5px 0 0 5px;
+        }
+
+        .job-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .btn-lamar {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+
+        .btn-lamar:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 136, 229, 0.3);
         }
 
         .applications-table {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .applications-table th,
-        .applications-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 30px;
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
         }
 
         .applications-table th {
-            background: #4a148c;
-            color: white;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 15px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .applications-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--light-blue);
+        }
+
+        .applications-table tr:last-child td {
+            border-bottom: none;
         }
 
         .applications-table tr:nth-child(even) {
-            background-color: #f5f5f5;
+            background-color: var(--light-gray);
         }
 
         .applications-table tr:hover {
-            background-color: #e0e0e0;
+            background-color: rgba(187, 222, 251, 0.2);
         }
 
-        h1, h2, h3 {
-            color: #4a148c;
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .job-listings {
+                grid-template-columns: 1fr;
+            }
+
+            .applications-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .btn-lamar {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
         }
 
-        .job-listings {
-            margin-top: 20px;
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            background: var(--light-blue);
+            color: var(--primary-color);
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stats-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
+            margin: 30px 0;
         }
 
-        .job-card {
-            background: white;
+        .stat-card {
+            background: var(--white);
             padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #4a148c;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .job-info {
-            margin-bottom: 15px;
-        }
-
-        .btn-lamar {
-            background: #4a148c;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .btn-lamar:hover {
-            background: #7b1fa2;
-            transform: translateY(-2px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-        .no-data {
+            border-radius: 15px;
+            box-shadow: var(--shadow);
             text-align: center;
-            padding: 20px;
-            color: #666;
+            transition: var(--transition);
         }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2em;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+            .job-card {
+        /* ... (style sebelumnya tetap sama) ... */
+        padding: 0;
+        background: var(--white);
+        overflow: hidden;
+    }
+
+    .job-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-bottom: 3px solid var(--primary-color);
+        transition: transform 0.3s ease;
+    }
+
+    .job-card:hover .job-image {
+        transform: scale(1.05);
+    }
+
+    .job-content {
+        padding: 25px;
+    }
+
+    .job-info {
+        margin-bottom: 15px;
+    }
+
+    .requirements-list {
+        list-style: none;
+        padding: 0;
+        margin: 15px 0;
+    }
+
+    .requirements-list li {
+        padding: 5px 0;
+        color: var(--text-light);
+        font-size: 0.9em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .requirements-list li i {
+        color: var(--primary-color);
+    }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container animate-fade-in">
         <div class="header">
-            <h1>Dashboard Pendaftaran PT Elnathan</h1>
+            <h1><i class="fas fa-building"></i> Dashboard Pendaftaran PT Elnathan</h1>
             <div id="current-time"></div>
         </div>
 
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Posisi Tersedia</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalApplicants">0</div>
+                <div class="stat-label">Total Pendaftar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24</div>
+                <div class="stat-label">Jam Operasional</div>
+            </div>
+        </div>
+
         <div class="company-info">
-            <h2>Informasi Perusahaan</h2>
-            <p><strong>Nama Perusahaan:</strong> PT. Digital Inovasi Teknologi</p>
-            <p><strong>Alamat:</strong> Jl. Teknologi Raya No. 123, Jakarta Selatan</p>
-            <p><strong>Email:</strong> careers@digitalinovasi.com</p>
-            <p><strong>Telepon:</strong> (021) 555-0123</p>
+            <h2><i class="fas fa-info-circle"></i> Informasi Perusahaan</h2>
+            <p><i class="fas fa-building"></i> <strong>Nama Perusahaan:</strong> PT. Digital Inovasi Teknologi</p>
+            <p><i class="fas fa-map-marker-alt"></i> <strong>Alamat:</strong> Jl. Teknologi Raya No. 123, Jakarta Selatan</p>
+            <p><i class="fas fa-envelope"></i> <strong>Email:</strong> careers@digitalinovasi.com</p>
+            <p><i class="fas fa-phone"></i> <strong>Telepon:</strong> (021) 555-0123</p>
         </div>
 
         <div class="profile-section">
-            <h2>Profil Pengguna</h2>
+            <h2><i class="fas fa-user-circle"></i> Profil Pengguna</h2>
             <div id="userProfile">
                 <!-- Profil pengguna akan ditampilkan di sini -->
             </div>
         </div>
 
-              <h2>Posisi yang Dibutuhkan</h2>
-<div class="job-listings">
+        <h2><i class="fas fa-briefcase"></i> Posisi yang Dibutuhkan</h2>
+       <div class="job-listings">
     <div class="job-card">
-        <div class="job-info">
-            <h3>Software Developer</h3>
-            <p>Pengalaman minimal 2 tahun</p>
-            <p>Gaji: Rp 10.000.000 - Rp 15.000.000</p>
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085" alt="Software Developer" class="job-image">
+        <div class="job-content">
+            <div class="job-info">
+                <h3><i class="fas fa-code"></i> Software Developer</h3>
+                <ul class="requirements-list">
+                    <li><i class="fas fa-clock"></i> Pengalaman minimal 2 tahun</li>
+                    <li><i class="fas fa-laptop-code"></i> Expert in PHP, JavaScript, Python</li>
+                    <li><i class="fas fa-database"></i> Familiar dengan MySQL & MongoDB</li>
+                    <li><i class="fas fa-money-bill-wave"></i> Gaji: Rp 10.000.000 - Rp 15.000.000</li>
+                </ul>
+            </div>
+            <a href="lamar.html" class="btn-lamar" target="_blank">
+                <i class="fas fa-paper-plane"></i> Lamar Sekarang
+            </a>
         </div>
-        <a href="lamar.html" class="btn-lamar" target="_blank" style="text-decoration: none;">
-            <i class="fas fa-paper-plane"></i> Lamar Sekarang
-        </a>
     </div>
+
     <div class="job-card">
-        <div class="job-info">
-            <h3>UI/UX Designer</h3>
-            <p>Pengalaman minimal 1 tahun</p>
-            <p>Gaji: Rp 8.000.000 - Rp 12.000.000</p>
+        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5" alt="UI/UX Designer" class="job-image">
+        <div class="job-content">
+            <div class="job-info">
+                <h3><i class="fas fa-paint-brush"></i> UI/UX Designer</h3>
+                <ul class="requirements-list">
+                    <li><i class="fas fa-clock"></i> Pengalaman minimal 1 tahun</li>
+                    <li><i class="fas fa-palette"></i> Mahir menggunakan Figma & Adobe XD</li>
+                    <li><i class="fas fa-users"></i> Memahami User Research</li>
+                    <li><i class="fas fa-money-bill-wave"></i> Gaji: Rp 8.000.000 - Rp 12.000.000</li>
+                </ul>
+            </div>
+            <a href="lamar.html" class="btn-lamar" target="_blank">
+                <i class="fas fa-paper-plane"></i> Lamar Sekarang
+            </a>
         </div>
-        <a href="lamar.html" class="btn-lamar" target="_blank" style="text-decoration: none;">
-            <i class="fas fa-paper-plane"></i> Lamar Sekarang
-        </a>
     </div>
+
     <div class="job-card">
-        <div class="job-info">
-            <h3>Digital Marketing</h3>
-            <p>Fresh graduate diperbolehkan</p>
-            <p>Gaji: Rp 5.000.000 - Rp 8.000.000</p>
+        <img src="https://images.unsplash.com/photo-1557838923-2985c318be48" alt="Digital Marketing" class="job-image">
+        <div class="job-content">
+            <div class="job-info">
+                <h3><i class="fas fa-bullhorn"></i> Digital Marketing</h3>
+                <ul class="requirements-list">
+                    <li><i class="fas fa-user-graduate"></i> Fresh graduate diperbolehkan</li>
+                    <li><i class="fas fa-chart-line"></i> Paham SEO & Social Media Marketing</li>
+                    <li><i class="fas fa-ad"></i> Pengalaman dengan Google Ads</li>
+                    <li><i class="fas fa-money-bill-wave"></i> Gaji: Rp 5.000.000 - Rp 8.000.000</li>
+                </ul>
+            </div>
+            <a href="lamar.html" class="btn-lamar" target="_blank">
+                <i class="fas fa-paper-plane"></i> Lamar Sekarang
+            </a>
         </div>
-        <a href="lamar.html" class="btn-lamar" target="_blank" style="text-decoration: none;">
-            <i class="fas fa-paper-plane"></i> Lamar Sekarang
-        </a>
     </div>
 </div>
 
-        <h2>Pendaftar</h2>
+        <h2><i class="fas fa-users"></i> Pendaftar</h2>
         <table class="applications-table">
             <thead>
                 <tr>
@@ -232,25 +463,26 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // Update waktu
+        // Update waktu dengan format Indonesia
         function updateTime() {
             const now = new Date();
-            const formattedTime = now.toLocaleString('id-ID', { 
-                dateStyle: 'full', 
-                timeStyle: 'medium' 
-            });
-            document.getElementById('current-time').textContent = formattedTime;
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                timeZoneName: 'short'
+            };
+            const formattedTime = now.toLocaleString('id-ID', options);
+            document.getElementById('current-time').innerHTML = `<i class="far fa-clock"></i> ${formattedTime}`;
         }
         setInterval(updateTime, 1000);
         updateTime();
 
-        // Fungsi untuk melamar pekerjaan
-        window.applyJob = function(position) {
-            // Redirect ke halaman formulir lamaran dengan posisi yang dipilih
-            window.location.href = `form-lamaran.html?position=${encodeURIComponent(position)}`;
-        };
-
-        // Tampilkan profil pengguna dari localStorage
+        // Tampilkan profil pengguna dari localStorage dengan animasi
         function displayUserProfile() {
             const userProfile = document.getElementById('userProfile');
             const savedProfile = localStorage.getItem('userProfile');
@@ -258,16 +490,18 @@
             if (savedProfile) {
                 const profile = JSON.parse(savedProfile);
                 userProfile.innerHTML = `
-                    <p><strong>Nama:</strong> ${profile.name || 'Tidak tersedia'}</p>
-                    <p><strong>Usia:</strong> ${profile.age || 'Tidak tersedia'}</p>
-                    <p><strong>Gender:</strong> ${profile.gender || 'Tidak tersedia'}</p>
+                    <div class="animate-fade-in">
+                        <p><i class="fas fa-user"></i> <strong>Nama:</strong> ${profile.name || 'Tidak tersedia'}</p>
+                        <p><i class="fas fa-birthday-cake"></i> <strong>Usia:</strong> ${profile.age || 'Tidak tersedia'}</p>
+                        <p><i class="fas fa-venus-mars"></i> <strong>Gender:</strong> ${profile.gender || 'Tidak tersedia'}</p>
+                    </div>
                 `;
             } else {
-                userProfile.innerHTML = '<p>Profil belum tersedia</p>';
+                userProfile.innerHTML = '<p class="animate-fade-in"><i class="fas fa-exclamation-circle"></i> Profil belum tersedia</p>';
             }
         }
 
-        // Tampilkan data pendaftaran dari Firebase
+        // Tampilkan data pendaftaran dari Firebase dengan animasi
         function displayApplications() {
             const applicationsRef = ref(database, 'job-applications');
             onValue(applicationsRef, (snapshot) => {
@@ -276,9 +510,14 @@
 
                 if (snapshot.exists()) {
                     const applications = snapshot.val();
-                    Object.keys(applications).reverse().forEach(key => {
+                    const totalApplicants = Object.keys(applications).length;
+                    document.getElementById('totalApplicants').textContent = totalApplicants;
+
+                    Object.keys(applications).reverse().forEach((key, index) => {
                         const application = applications[key];
                         const row = document.createElement('tr');
+                        row.className = 'animate-fade-in';
+                        row.style.animationDelay = `${index * 0.1}s`;
                         const date = new Date(application.timestamp);
                         row.innerHTML = `
                             <td>${date.toLocaleDateString('id-ID')}</td>
@@ -287,14 +526,16 @@
                             <td>${application.gender.charAt(0)}****</td>
                             <td>${application.education}</td>
                             <td>${application.phoneNumber.substring(0, 3)}****${application.phoneNumber.substring(application.phoneNumber.length - 2)}</td>
-                            <td>Dalam Review</td>
+                            <td><span class="status-badge">Dalam Review</span></td>
                         `;
                         tableBody.appendChild(row);
                     });
                 } else {
                     tableBody.innerHTML = `
                         <tr>
-                            <td colspan="7" class="no-data">Belum ada data pendaftaran</td>
+                            <td colspan="7" class="no-data animate-fade-in">
+                                <i class="fas fa-info-circle"></i> Belum ada data pendaftaran
+                            </td>
                         </tr>
                     `;
                 }
@@ -304,52 +545,16 @@
         // Inisialisasi dashboard
         displayUserProfile();
         displayApplications();
-        // ========== 1. Buat Service Worker Secara Dinamis ==========
-// Catatan: Jika kamu tidak ingin punya file terpisah 'service-worker.js'
-// maka kita buat blob-nya secara inline dari sini
-const swScript = `
-  self.addEventListener('install', event => {
-    console.log('[SW] Installed');
-  });
 
-  self.addEventListener('fetch', event => {
-    event.respondWith(fetch(event.request));
-  });
-`;
-
-// Buat blob URL dari script SW
-const swBlob = new Blob([swScript], { type: 'application/javascript' });
-const swUrl = URL.createObjectURL(swBlob);
-
-// ========== 2. Registrasi Service Worker ==========
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register(swUrl)
-      .then(reg => {
-        console.log('[SW] Registered with scope:', reg.scope);
-      })
-      .catch(err => {
-        console.error('[SW] Registration failed:', err);
-      });
-  });
-}
-
-// ========== 3. Deteksi Apakah Sedang dalam Mode Aplikasi ==========
-window.addEventListener('DOMContentLoaded', () => {
-  if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-    console.log('[PWA] Running in standalone mode');
-  } else {
-    console.log('[PWA] Running in browser mode');
-  }
-});
-
-// ========== 4. Prompt Install Otomatis (tanpa tombol) ==========
-window.addEventListener('beforeinstallprompt', (e) => {
-  // Biarkan browser yang menangani sendiri
-  console.log('[PWA] beforeinstallprompt triggered, browser akan memutuskan kapan menampilkan prompt');
-});
-
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker
+                    .register('/sw.js')
+                    .then(reg => console.log('[SW] Registered'))
+                    .catch(err => console.error('[SW] Registration failed:', err));
+            });
+        }
     </script>
 </body>
 </html>
